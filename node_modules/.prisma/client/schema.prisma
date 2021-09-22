@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model Complaint {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @db.VarChar(255)
+  description  String?
+  authorization Boolean  @default(false)
+  author    User?     @relation(fields: [authorId], references: [id])
+  anonymousAuthor Anonymous? @relation(fields: [anonymousAuthorId], references:[id])
+  authorId  String?
+  anonymousAuthorId  String?
+}
+enum Profile {
+  ANONYMOUS
+  USER
+}
+model Anonymous {
+  id      String      @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile Profile @default(ANONYMOUS)
+  complaints   Complaint[]
+}
+
+model User {
+  id      String      @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  firstName    String?
+  secondName    String?
+  fisrtLastName    String?
+  secondLastName    String?
+  marriedName    String
+  email String? @unique
+  countryInformation CountryIformation?
+  consumerType ConsumerType?
+  profile Profile @default(USER)
+  gender Gender?
+  phone Phone?
+  personalDocuments PersonalDocumentation?
+  complaints   Complaint[]
+
+}
+
+
+model Phone{
+  id      Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  phoneNumber String?
+  phoneAddress String?
+  mobile String?
+  docimicilioPhone String?
+  user   User    @relation(fields: [phoneId], references: [id])
+  phoneId String     @unique
+}
+
+
+model Gender{
+  user   User    @relation(fields: [genderId], references: [id])
+  genderId String      @id @default(uuid())
+  genderType String?
+}
+
+model ConsumerType{
+  user   User    @relation(fields: [consumerId], references: [id])
+  consumerId String    @id @default(uuid())
+  consumer String?
+}
+
+model CountryIformation{
+  id      Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nationality String?
+  direction String?
+  zone String
+  departament String?
+  municipality String?
+  nearbyHeadquarters String?
+  user   User    @relation(fields: [countryId], references: [id])
+  countryId String     @unique
+}
+
+model PersonalDocumentation{
+  id      Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  identificationDocument    String?
+  nit String?
+  user   User    @relation(fields: [personalDocId], references: [id])
+  personalDocId String     @unique
+}
+
+
