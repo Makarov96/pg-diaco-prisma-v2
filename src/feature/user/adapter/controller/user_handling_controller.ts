@@ -42,6 +42,7 @@ class  UserControllerImpl implements UserController{
   }
   indexCreateAnonymousUser= async (req: Request, res: Response, next: NextFunction) => {
       try {
+  
       const result = await this.userManager.createAnonymousUser();
       res.json({
         "success":true,

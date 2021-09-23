@@ -33,5 +33,6 @@ app.use(routes_1.router);
 app.use((0, morgan_1.default)("dev"));
 app.set("ipaddr", "127.0.0.1");
 app.set("port", 3000);
+server.address();
 server.listen(3000, function () { console.log('server is running on port http://localhost:' + ("" + 3000)); });
 //# sourceMappingURL=server.js.map
