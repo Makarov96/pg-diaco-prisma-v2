@@ -18,21 +18,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var config_1 = require("./core/utils/config");
-var http = __importStar(require("http"));
-var routes_1 = require("./routes/routes");
-var morgan_1 = __importDefault(require("morgan"));
-var app = (0, express_1.default)();
-var server = http.createServer(app);
-app.use(express_1.default.json());
-app.use(routes_1.router);
-app.use((0, morgan_1.default)("prod"));
-app.set("ipaddr", "127.0.0.1");
-app.set("port", config_1.PORT || 3000);
-server.listen(config_1.PORT || 3000, function () { console.log('server is running on port http://localhost:' + ("" + (config_1.PORT || 3000))); });
-//# sourceMappingURL=server.js.map
+exports.PORT = void 0;
+var dotenv = __importStar(require("dotenv"));
+dotenv.config();
+var path;
+switch (process.env.NODE_ENV) {
+    case "production":
+        path = __dirname + "/../../../.env";
+        break;
+    default:
+        path = __dirname + "/../../../.env";
+}
+dotenv.config({ path: path });
+exports.PORT = process.env.PORT;
+//# sourceMappingURL=config.js.map
