@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 app.use(express.json());
 app.use(router);
-app.use(morgan("dev"));
+app.use(morgan("prod"));
 
 app.set( "ipaddr", "127.0.0.1" ); 
 app.set( "port",  3000);
