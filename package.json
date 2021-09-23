@@ -5,9 +5,11 @@
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "tsc -b && node --inspect=5858 -r ts-node/register ./src/server.ts",
+        "start": "node ./src/server.js",
         "start:watch": "start",
-        "build": "tsc -b"
+        "build": "tsc -b",
+        "tsc": "tsc",
+        "postinstall": "npm run tsc"
     },
     "nodemonConfig": {
         "ignore": [
